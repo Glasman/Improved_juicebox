@@ -1,10 +1,29 @@
-const router = require ('express').Router();
+const router = require("express").Router();
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
-router.get("/", (req, res, next) => {
+// /api/posts
+router.get("/", async (req, res) => {
+  try {
+    const posts = await prisma.post.findMany();
 
-res.send("we've successfully connected to the posts router")
+    res.send(posts);
+  } catch (error) {
+    next(error);
+  }
+});
 
-
-})
+// /api/posts/:id
+router.get("/:id", async (req, res, next) => {
+  try {
+    const postid = parseInt(req.params.id)
+    const user = await prisma.post.findUnique({
+      where: { id: postid },
+    });
+    res.send(user || {})
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
