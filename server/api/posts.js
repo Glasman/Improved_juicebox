@@ -26,4 +26,8 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+
+//didn't have a chance to get CRUD operations because I was focusing on reviewing JWT and bcrypt
+//but now that I have access to JWT tokens I can write up some conditional logic to either execute CRUD operations if a token does exist
+//or returns a 401 error if the token doesn't match up
 module.exports = router;
