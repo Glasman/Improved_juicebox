@@ -4,11 +4,18 @@ const bcrypt = require('bcrypt');
 
 async function seed() {
   try {
+    const saltRounds = 10;
+
+    const hashedPineapple = await bcrypt.hash('pineapple', saltRounds);
+    const hashedRock = await bcrypt.hash('rock', saltRounds);
+    const hashedTikihead = await bcrypt.hash('tikihead', saltRounds);
+
+
     await prisma.user.createMany({
       data: [
-        { username: "Spongebob", password: "pineapple" },
-        { username: "Patrick", password: "rock" },
-        { username: "Squidward", password: "tikihead" },
+        { username: 'Spongebob', password: hashedPineapple },
+        { username: 'Patrick', password: hashedRock },
+        { username: 'Squidward', password: hashedTikihead },
       ],
     });
 
